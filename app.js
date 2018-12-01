@@ -8,6 +8,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.get('/', (req, res) => {
+    res.render('home')
+});
+
+app.get('/news', (req, res) => {
     request.get({
         url: "https://api.nytimes.com/svc/search/v2/articlesearch.json",
         qs: {
@@ -17,15 +21,20 @@ app.get('/', (req, res) => {
     }, function(err, response, body) {
         body = JSON.parse(body);
         let newses = body.response.docs;
-        //     web_url: e.web_url,
-        //     snippet: e.snippet,
-        //     source: e.source,
-        //     headline: e.headline.main,
-        //     pub_date: e.pub_date
-        // }
-        // res.json(body.response.docs.map(e => 'web_url: '+e.web_url+'snippet: '+e.snippet+'source: '+e.source ));
-        // console.log(newses[0]);
         res.render('nypost', {newses} );
+    });
+});
+
+
+app.get('/cricket-match', (req, res) => {
+    request.get({
+        url: "https://cricapi.com/api/matchCalendar?apikey=SwG25TktryU97dIiVfLFBVqFTVd2",
+
+    }, function(err, response, body) {
+        body = JSON.parse(body);
+        let matchs = body.data;
+        // console.log(body);
+        res.render('cricket_match', {matchs} );
     });
 });
 

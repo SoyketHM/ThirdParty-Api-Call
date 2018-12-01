@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    br
+    h2 Upcoming 20 Cricket Match List
+    br
+    each match in matchs.slice(0, 20)
+        .card
+            .card-body
+                p.card-text Match Date: #{match.date}
+                p.card-text Team & Area: #{match.name}
+        br
